@@ -26,27 +26,33 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 export default nextConnect({
-  onError(error, req, res) {
-    res.status(501).json({ error: `${error.message}` });
-  },
-  onNoMatch(req, res) {
-    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
-  }
+	onError(error, req, res) {
+		res.status(501).json({ error: `${error.message}` });
+	},
+	onNoMatch(req, res) {
+		res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+	},
 }).post((req, res) => {
-  // get data from request
-  // check if username exists in request
-  if (!req.body.username || !req.body.password || !req.body.battery) {
-    res.status(400).json({ error: 'invalid data' });
-    return;
-  }
-  
-  // write data to firebase
-  set(ref(database, 'data'), {
-    username,
-    password,
-    battery,
-  });
+	// get data from request
+	// check if username exists in request
+	if (
+		!('username' in req.body) ||
+		!('password' in req.body) ||
+		!('battery' in req.body)
+	) {
+		res.status(400).json({ error: 'invalid data' });
+		return;
+	}
 
-  // return success
-  res.status(200).json({ status: 'success' });
+	const { username, password, battery } = req.body;
+
+	// write data to firebase
+	set(ref(database, 'data'), {
+		username,
+		password,
+		battery,
+	});
+
+	// return success
+	res.status(200).json({ status: 'success' });
 });
