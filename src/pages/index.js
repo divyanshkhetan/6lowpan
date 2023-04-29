@@ -31,9 +31,28 @@ export default function Home() {
 
 	return (
 		<>
-			<h1>Username: {data.username}</h1>
-			<h1>Password: {data.password}</h1>
-			<h1>Battery: {data.battery}</h1>
+			<div class="container">
+				<div class="heading">
+            		<h1>6LoWPAN-based home automation
+                	device with energy harvesting</h1>
+        		</div>
+				<div class="inner_container">
+            		<div class="gauge">
+              			<div class="gauge_body">
+                			<div class="gauge_fill"></div>
+                			<div class="gauge_cover_1"></div>
+                			<div class="gauge_cover_2">100%</div>
+              			</div>
+            		</div>
+            		<div class="gauge">
+              			<div class="gauge_body">
+                			<div class="gauge_fill"></div>
+                			<div class="gauge_cover_1"></div>
+                			<div class="gauge_cover_2">100%</div>
+              			</div>
+            		</div>
+        		</div>
+			</div>
 		</>
 	);
 }
