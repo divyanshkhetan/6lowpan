@@ -2,6 +2,8 @@ import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, onValue } from 'firebase/database';
 import { useState, useEffect } from 'react';
 
+import styles from '../styles/index.module.css';
+
 const firebaseConfig = {
 	apiKey: 'AIzaSyAN5AxEKvhLV7Oe1DaqR4f-8q3O01d3e94',
 	authDomain: 'lowpan-6c3a4.firebaseapp.com',
@@ -15,44 +17,85 @@ const firebaseConfig = {
 };
 
 export default function Home() {
-	const [data, setData] = useState({ username: '', password: '', battery: '' });
+	const [boardData, setBoardData] = useState({
+		'cpu-on-time': 0,
+		'deep-lpm': 0,
+		'lpm': 0,
+		'radio-listen': 0,
+		'radio-off': 0,
+		'radio-transmit': 0,
+		'total-time': 0
+	});
+	const [cmdData, setCmdData] = useState({});
+	const [statusData, setStatusData] = useState({});
 
 	useEffect(() => {
 		// Initialize Firebase
 		const app = initializeApp(firebaseConfig);
 		const db = getDatabase(app);
 
-		const dataRef = ref(db, 'data');
-		onValue(dataRef, (snapshot) => {
+		const boardDataRef = ref(db, 'board_data');
+		const cmdDataRef = ref(db, 'cmd');
+		const statusRef = ref(db, 'status');
+
+		onValue(boardDataRef, (snapshot) => {
 			const temp = snapshot.val();
-			setData(temp);
+			setBoardData(temp);
+			console.log("Board Data: ", boardData);
 		});
+		
+		onValue(cmdDataRef, (snapshot) => {
+			const temp = snapshot.val();
+			setCmdData(temp);
+			console.log("Cmd: ", cmdData);
+		});
+		
+		onValue(statusRef, (snapshot) => {
+			const temp = snapshot.val();
+			setStatusData(temp);
+			console.log("Status: ", statusData);
+		});
+
 	}, []);
 
 	return (
 		<>
-			<div class="container">
-				<div class="heading">
-            		<h1>6LoWPAN-based home automation
-                	device with energy harvesting</h1>
-        		</div>
-				<div class="inner_container">
-            		<div class="gauge">
-              			<div class="gauge_body">
-                			<div class="gauge_fill"></div>
-                			<div class="gauge_cover_1"></div>
-                			<div class="gauge_cover_2">100%</div>
-              			</div>
-            		</div>
-            		<div class="gauge">
-              			<div class="gauge_body">
-                			<div class="gauge_fill"></div>
-                			<div class="gauge_cover_1"></div>
-                			<div class="gauge_cover_2">100%</div>
-              			</div>
-            		</div>
-        		</div>
+			<div className={styles.header}>Gateway to Raspberry Pi 3</div>
+			<div className={styles.boardData}>
+				<div className={styles.gridRow4}>
+					<div className={styles.gridItem}>
+						<div>CPU-on-Time</div>
+						<div>{boardData['cpu-on-time']}s</div>
+					</div>				
+					<div className={styles.gridItem}>
+						<div>Deep-LPM</div>
+						<div>{boardData['deep-lpm']}s</div>
+					</div>				
+					<div className={styles.gridItem}>
+						<div>LPM</div>
+						<div>{boardData['lpm']}s</div>
+					</div>				
+					<div className={styles.gridItem}>
+						<div>Total Time</div>
+						<div>{boardData['total-time']}s</div>
+					</div>				
+				</div>
+				<div className={styles.gridRow3}>
+					<div className={styles.gridItem}>
+						<div>Radio Listen</div>
+						<div>{boardData['radio-listen']}s</div>
+					</div>				
+					<div className={styles.gridItem}>
+						<div>Radio Transmit</div>
+						<div>{boardData['radio-transmit']}s</div>
+					</div>				
+					<div className={styles.gridItem}>
+						<div>Radio Off</div>
+						<div>{boardData['radio-off']}s</div>
+					</div>				
+				</div>
 			</div>
+			
 		</>
 	);
 }

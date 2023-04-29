@@ -1,0 +1,29 @@
+.header {
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 300;
+    font-size: 3rem;
+    text-align: center;
+    margin: 1rem;
+    padding: 0;
+}
+
+.boardData {
+    margin: 2rem;
+}
+
+.gridRow4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-gap: 1rem;
+}
+
+.gridRow3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1rem;
+}
+
+.gridItem {
+    text-align: center;
+    margin: 1rem;
+}
