@@ -43,8 +43,8 @@ const Gateway = ({gatewayData, gatewayStatus}) => {
                 </div>
                 <div className={styles.indivData}>
                     {isGateWayConnected() ? 
-                    `${gatewayData['cpu-thermal'].crit} ${gatewayData['cpu-thermal'].curr}/${gatewayData['cpu-thermal'].high}°C` :
-                    `0 0/0°C` }
+                    `${gatewayData['cpu-thermal'].curr.toFixed(2)}°C (Critical: ${gatewayData['cpu-thermal'].crit}°C)` :
+                    `0°C (Critical: 0°C)` }
                 </div>
             </div>
             <div className={styles.indivDataContainer}>
