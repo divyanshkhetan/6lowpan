@@ -28,8 +28,8 @@ const renderBoardData = (boardData, statusData) => {
           <div>{statusData.connected != 0 ? boardData["cpu-on-time"] : 0}s</div>
         </div>
         <div className={styles.gridItem}>
-          <div>Deep-LPM</div>
-          <div>{statusData.connected != 0 ? boardData["deep-lpm"] : 0}s</div>
+          <div>Radio Listen</div>
+          <div>{statusData.connected != 0 ? boardData["radio-listen"] : 0}s</div>
         </div>
         <div className={styles.gridItem}>
           <div>LPM</div>
