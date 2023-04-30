@@ -119,6 +119,7 @@ export default function Home() {
 		} else {
 			return true;
 		}
+		return false;
 	}
 
 	return (
@@ -132,10 +133,11 @@ export default function Home() {
 				{isGateWayConnected() ?
 				<Board boardData={boardData} statusData={statusData} /> :
 				<div className={styles.gatewayNotConnected}>•Not Connected to the Gateway!</div>}
-
-				
 			</div>
 
+			<div className={styles.terminalContainer}>
+
+			</div>
 		</>
 	);
 }
